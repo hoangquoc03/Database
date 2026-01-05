@@ -119,3 +119,5 @@ Diễn giải:
 Một Student → nhiều Class_Section
 
 Một Class_Section → nhiều Student
+<img width="1038" height="803" alt="image" src="https://github.com/user-attachments/assets/184b3cb9-ab23-4dc3-a720-7ed62a46cfc4" />
+
