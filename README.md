@@ -111,4 +111,108 @@ Hệ thống sử dụng mô hình **Entity–Relationship (ER)** để mô tả
 
 ## 🗺️ 3. Sơ đồ ERD
 <img width="1038" height="803" alt="image" src="https://github.com/user-attachments/assets/184b3cb9-ab23-4dc3-a720-7ed62a46cfc4" />
+# 🛒 Hệ thống Quản lý Đơn hàng Thương mại Điện tử
+## 🧩 2. Các Thực Thể và Thuộc Tính
 
+### 👤 2.1. Customer (Khách hàng)
+**Khóa chính (PK):**
+- `customer_id`
+
+**Thuộc tính:**
+- `full_name` – Họ tên  
+- `email` – Email  
+- `phone` – Số điện thoại  
+- `address` – Địa chỉ  
+
+---
+
+### 📦 2.2. Product (Sản phẩm)
+**Khóa chính (PK):**
+- `product_id`
+
+**Thuộc tính:**
+- `product_name` – Tên sản phẩm  
+- `price` – Giá bán  
+- `description` – Mô tả  
+- `category` – Loại hàng  
+
+---
+
+### 🧾 2.3. Order (Đơn hàng)
+**Khóa chính (PK):**
+- `order_id`
+
+**Thuộc tính:**
+- `order_date` – Ngày đặt hàng  
+- `total_amount` – Tổng tiền  
+- `status` – Trạng thái đơn hàng  
+
+**Khóa ngoại (FK):**
+- `customer_id` → `Customer(customer_id)`  
+- `staff_id` → `Staff(staff_id)`
+
+---
+
+### 📑 2.4. OrderDetail (Chi tiết đơn hàng)
+Đây là **thực thể trung gian** dùng để giải quyết quan hệ **n–n** giữa `Order` và `Product`.
+
+**Khóa chính (PK – kết hợp):**
+- `order_id`  
+- `product_id`
+
+**Khóa ngoại (FK):**
+- `order_id` → `Order(order_id)`  
+- `product_id` → `Product(product_id)`
+
+**Thuộc tính:**
+- `quantity` – Số lượng  
+- `unit_price` – Đơn giá tại thời điểm mua  
+
+---
+
+### 👨‍💼 2.5. Staff (Nhân viên)
+**Khóa chính (PK):**
+- `staff_id`
+
+**Thuộc tính:**
+- `full_name` – Họ tên  
+- `position` – Vị trí công việc  
+- `hire_date` – Ngày vào làm  
+
+---
+
+## 🔗 3. Các Mối Quan Hệ
+
+### 👤 Customer – Order
+- **Quan hệ:** Khách hàng đặt đơn hàng  
+- **Kiểu:** 1 – n  
+
+**Diễn giải:**
+- Một khách hàng có thể đặt **nhiều đơn hàng**  
+- Một đơn hàng chỉ thuộc về **một khách hàng**
+
+---
+
+### 🧾 Order – Product
+- **Quan hệ:** Đơn hàng chứa sản phẩm  
+- **Kiểu:** n – n  
+- **Giải pháp:** Thông qua bảng `OrderDetail`
+
+**Diễn giải:**
+- Một đơn hàng có thể chứa **nhiều sản phẩm**  
+- Một sản phẩm có thể xuất hiện trong **nhiều đơn hàng**
+
+---
+
+### 👨‍💼 Staff – Order
+- **Quan hệ:** Nhân viên xử lý đơn hàng  
+- **Kiểu:** 1 – n  
+
+**Diễn giải:**
+- Một nhân viên có thể xử lý **nhiều đơn hàng**  
+- Một đơn hàng được xử lý bởi **một nhân viên**
+
+---
+
+## 🗺️ 4. Sơ đồ ERD
+<img width="739" height="573" alt="image" src="https://github.com/user-attachments/assets/29e827f3-de7c-4c31-a6ac-5e221939f4f0" />
