@@ -1,123 +1,114 @@
-. Xác định các thực thể và thuộc tính
-1.1. Thực thể Student (Sinh viên)
+# 🎓 Hệ thống Quản lý Đăng ký Môn học Đại học
 
-PK: student_id
+## 📌 Giới thiệu
+Hệ thống Quản lý Đăng ký Môn học Đại học được thiết kế nhằm hỗ trợ việc quản lý sinh viên, môn học, giảng viên, lớp học phần và quá trình đăng ký môn học.  
+Hệ thống sử dụng mô hình **Entity–Relationship (ER)** để mô tả các thực thể và mối quan hệ giữa chúng.
 
-Thuộc tính:
+---
 
-full_name
+## 🧩 1. Các Thực Thể và Thuộc Tính
 
-date_of_birth
+### 👨‍🎓 1.1. Student (Sinh viên)
+**Khóa chính (PK):**
+- `student_id`
 
-gender
+**Thuộc tính:**
+- `full_name` – Họ và tên  
+- `date_of_birth` – Ngày sinh  
+- `gender` – Giới tính  
+- `email` – Email  
+- `department` – Khoa / Ngành  
 
-email
+---
 
-department
+### 📘 1.2. Course (Môn học)
+**Khóa chính (PK):**
+- `course_id`
 
-1.2. Thực thể Course (Môn học)
+**Thuộc tính:**
+- `course_name` – Tên môn học  
+- `credits` – Số tín chỉ  
+- `department` – Khoa phụ trách  
 
-PK: course_id
+---
 
-Thuộc tính:
+### 👨‍🏫 1.3. Instructor (Giảng viên)
+**Khóa chính (PK):**
+- `instructor_id`
 
-course_name
+**Thuộc tính:**
+- `full_name` – Họ và tên  
+- `degree` – Học vị  
+- `email` – Email  
+- `department` – Khoa  
 
-credits
+---
 
-department
+### 🏫 1.4. Class_Section (Lớp học phần)
+**Khóa chính (PK):**
+- `section_id`
 
-1.3. Thực thể Instructor (Giảng viên)
+**Thuộc tính:**
+- `semester` – Học kỳ  
+- `academic_year` – Năm học  
+- `classroom` – Phòng học  
 
-PK: instructor_id
+**Khóa ngoại (FK):**
+- `course_id` → `Course(course_id)`  
+- `instructor_id` → `Instructor(instructor_id)`
 
-Thuộc tính:
+---
 
-full_name
+### 📝 1.5. Enrollment (Đăng ký môn học)
+Đây là **thực thể trung gian** dùng để giải quyết quan hệ **n–n** giữa `Student` và `Class_Section`.
 
-degree
+**Khóa chính (PK – kết hợp):**
+- `student_id`  
+- `section_id`
 
-email
+**Khóa ngoại (FK):**
+- `student_id` → `Student(student_id)`  
+- `section_id` → `Class_Section(section_id)`
 
-department
+**Thuộc tính mở rộng:**
+- `enroll_date` – Ngày đăng ký  
+- `grade` – Điểm số (nếu quản lý kết quả học tập)
 
-1.4. Thực thể Class_Section (Lớp học phần)
+---
 
-PK: section_id
+## 🔗 2. Các Mối Quan Hệ
 
-Thuộc tính:
+### 📘 2.1. Course – Class_Section
+**Mối quan hệ:** Một môn học có nhiều lớp học phần  
+- **Kiểu:** 1 – n  
 
-semester
+**Diễn giải:**
+- Một `Course` có thể mở **nhiều** `Class_Section`  
+- Một `Class_Section` chỉ thuộc về **một** `Course`
 
-academic_year
+---
 
-classroom
+### 👨‍🏫 2.2. Instructor – Class_Section
+**Mối quan hệ:** Giảng viên giảng dạy lớp học phần  
+- **Kiểu:** 1 – n  
 
-FK:
+**Diễn giải:**
+- Một `Instructor` có thể dạy **nhiều** `Class_Section`  
+- Một `Class_Section` do **một** `Instructor` phụ trách
 
-course_id → Course
+---
 
-instructor_id → Instructor
+### 👨‍🎓 2.3. Student – Class_Section
+**Mối quan hệ:** Sinh viên đăng ký lớp học phần  
+- **Kiểu:** n – n  
+- **Giải pháp:** Thông qua bảng trung gian `Enrollment`
 
-1.5. Thực thể Enrollment (Đăng ký)
+**Diễn giải:**
+- Một `Student` có thể đăng ký **nhiều** `Class_Section`  
+- Một `Class_Section` có thể có **nhiều** `Student`
 
-Đây là thực thể trung gian dùng để giải quyết quan hệ n–n giữa Student và Class_Section
+---
 
-PK (kết hợp):
-
-student_id
-
-section_id
-
-FK:
-
-student_id → Student
-
-section_id → Class_Section
-
-Thuộc tính (có thể mở rộng):
-
-enroll_date
-
-grade (nếu cần quản lý điểm)
-
-2. Xác định các mối quan hệ
-   2.1. Course – Class_Section
-
-Quan hệ: Một môn học có nhiều lớp học phần
-
-Kiểu: 1 – n
-
-Diễn giải:
-
-Một Course → nhiều Class_Section
-
-Một Class_Section → đúng một Course
-
-2.2. Instructor – Class_Section
-
-Quan hệ: Giảng viên dạy lớp học phần
-
-Kiểu: 1 – n
-
-Diễn giải:
-
-Một Instructor → nhiều Class_Section
-
-Một Class_Section → một Instructor
-
-2.3. Student – Class_Section
-
-Quan hệ: Sinh viên đăng ký lớp học phần
-
-Kiểu: n – n
-
-Cách xử lý: Thông qua thực thể Enrollment
-
-Diễn giải:
-
-Một Student → nhiều Class_Section
-
-Một Class_Section → nhiều Student
+## 🗺️ 3. Sơ đồ ERD
 <img width="1038" height="803" alt="image" src="https://github.com/user-attachments/assets/184b3cb9-ab23-4dc3-a720-7ed62a46cfc4" />
 
