@@ -364,3 +364,154 @@ Hệ thống sử dụng mô hình **Entity–Relationship (ER)** để mô tả
 ---
 
 ## 🗺️ 4. Sơ đồ ERD
+<img width="619" height="643" alt="image" src="https://github.com/user-attachments/assets/100e5e10-1169-4719-bd9c-b62a2bdafbd5" />
+---
+# 🎓 Hệ thống Quản lý Lớp học Trực tuyến
+## 🧩 2. Các Thực Thể và Thuộc Tính
+
+### 👤 2.1. User (Người dùng)
+**Khóa chính (PK):**
+- `user_id`
+
+**Thuộc tính:**
+- `full_name` – Họ tên  
+- `email` – Email  
+- `password` – Mật khẩu  
+- `role` – Vai trò (`student` / `instructor` / `admin`)
+
+---
+
+### 👨‍🏫 2.2. Instructor (Giảng viên)
+Là **một loại User**, mở rộng từ bảng `User`.
+
+**Khóa chính & khóa ngoại (PK, FK):**
+- `instructor_id` → `User(user_id)`
+
+**Thuộc tính bổ sung:**
+- `degree` – Học vị  
+- `expertise` – Chuyên môn  
+
+---
+
+### 📚 2.3. Category (Danh mục khóa học)
+**Khóa chính (PK):**
+- `category_id`
+
+**Thuộc tính:**
+- `category_name` – Tên danh mục  
+
+---
+
+### 📘 2.4. Course (Khóa học)
+**Khóa chính (PK):**
+- `course_id`
+
+**Thuộc tính:**
+- `course_name` – Tên khóa học  
+- `description` – Mô tả  
+- `level` – Cấp độ  
+- `price` – Giá  
+- `release_date` – Ngày phát hành  
+
+**Khóa ngoại (FK):**
+- `category_id` → `Category(category_id)`  
+- `instructor_id` → `Instructor(instructor_id)`
+
+---
+
+### 📝 2.5. Enrollment (Đăng ký học)
+Thực thể trung gian cho quan hệ **n–n** giữa `User (Student)` và `Course`.
+
+**Khóa chính (PK – kết hợp):**
+- `user_id`  
+- `course_id`
+
+**Khóa ngoại (FK):**
+- `user_id` → `User(user_id)`  
+- `course_id` → `Course(course_id)`
+
+**Thuộc tính:**
+- `enroll_date` – Ngày đăng ký  
+- `status` – Trạng thái (`đang học`, `hoàn thành`, `hủy`)
+
+---
+
+### 📖 2.6. Lesson (Bài học)
+**Khóa chính (PK):**
+- `lesson_id`
+
+**Thuộc tính:**
+- `title` – Tiêu đề  
+- `content` – Nội dung  
+- `duration` – Thời lượng  
+
+**Khóa ngoại (FK):**
+- `course_id` → `Course(course_id)`
+
+---
+
+### ❓ 2.7. Quiz (Bài kiểm tra)
+**Khóa chính (PK):**
+- `quiz_id`
+
+**Thuộc tính:**
+- `title` – Tiêu đề  
+- `question_count` – Số câu hỏi  
+
+**Khóa ngoại (FK):**
+- `lesson_id` → `Lesson(lesson_id)`
+
+---
+
+### 📊 2.8. Result (Kết quả)
+**Khóa chính (PK):**
+- `result_id`
+
+**Thuộc tính:**
+- `score` – Điểm  
+- `attempt_date` – Ngày làm bài  
+
+**Khóa ngoại (FK):**
+- `user_id` → `User(user_id)`  
+- `quiz_id` → `Quiz(quiz_id)`
+
+---
+
+## 🔗 3. Các Mối Quan Hệ
+
+### 👨‍🏫 Instructor – Course
+- **Kiểu:** 1 – n  
+- Một giảng viên có thể dạy **nhiều khóa học**  
+- Một khóa học do **một giảng viên** phụ trách  
+
+---
+
+### 📚 Category – Course
+- **Kiểu:** 1 – n  
+- Một danh mục có **nhiều khóa học**  
+- Một khóa học thuộc về **một danh mục**
+
+---
+
+### 📘 Course – Lesson – Quiz
+- Một khóa học có **nhiều bài học**  
+- Một bài học có thể có **nhiều quiz**
+
+---
+
+### 👤 Student – Course
+- **Kiểu:** n – n  
+- **Giải pháp:** Thông qua bảng `Enrollment`  
+- Một học viên có thể học **nhiều khóa học**  
+- Một khóa học có **nhiều học viên**
+
+---
+
+### 👤 Student – Quiz – Result
+- Một học viên có thể làm **nhiều quiz**  
+- Mỗi lần làm quiz tạo ra **một kết quả (Result)** riêng  
+
+---
+
+## 🗺️ 4. Sơ đồ ERD
+<img width="885" height="718" alt="image" src="https://github.com/user-attachments/assets/6e45bc58-7e43-4d84-b63d-7fbcc5b074a3" />
