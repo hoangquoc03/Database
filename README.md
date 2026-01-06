@@ -111,6 +111,8 @@ Hệ thống sử dụng mô hình **Entity–Relationship (ER)** để mô tả
 
 ## 🗺️ 3. Sơ đồ ERD
 <img width="1038" height="803" alt="image" src="https://github.com/user-attachments/assets/184b3cb9-ab23-4dc3-a720-7ed62a46cfc4" />
+
+---
 # 🛒 Hệ thống Quản lý Đơn hàng Thương mại Điện tử
 ## 🧩 2. Các Thực Thể và Thuộc Tính
 
