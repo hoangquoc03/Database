@@ -218,3 +218,149 @@ Hệ thống sử dụng mô hình **Entity–Relationship (ER)** để mô tả
 
 ## 🗺️ 4. Sơ đồ ERD
 <img width="739" height="573" alt="image" src="https://github.com/user-attachments/assets/29e827f3-de7c-4c31-a6ac-5e221939f4f0" />
+---
+# 🏨 Hệ thống Quản lý Đặt phòng Khách sạn
+
+---
+## 🧩 2. Các Thực Thể và Thuộc Tính
+
+### 🏨 2.1. Hotel (Khách sạn)
+**Khóa chính (PK):**
+- `hotel_id`
+
+**Thuộc tính:**
+- `hotel_name` – Tên khách sạn  
+- `address` – Địa chỉ  
+- `stars` – Số sao  
+- `description` – Mô tả  
+- `manager_name` – Người quản lý  
+
+---
+
+### 🚪 2.2. Room (Phòng)
+**Khóa chính (PK):**
+- `room_id`
+
+**Thuộc tính:**
+- `room_type` – Loại phòng (Deluxe, Standard, ...)  
+- `price_per_night` – Giá mỗi đêm  
+- `status` – Tình trạng (Trống / Đã đặt)  
+- `capacity` – Sức chứa  
+
+**Khóa ngoại (FK):**
+- `hotel_id` → `Hotel(hotel_id)`
+
+---
+
+### 👤 2.3. Customer (Khách hàng)
+**Khóa chính (PK):**
+- `customer_id`
+
+**Thuộc tính:**
+- `full_name` – Họ tên  
+- `email` – Email  
+- `phone` – Số điện thoại  
+- `nationality` – Quốc tịch  
+
+---
+
+### 📅 2.4. Booking (Đặt phòng)
+**Khóa chính (PK):**
+- `booking_id`
+
+**Thuộc tính:**
+- `booking_date` – Ngày đặt  
+- `check_in_date` – Ngày nhận phòng  
+- `check_out_date` – Ngày trả phòng  
+- `total_amount` – Tổng tiền  
+- `status` – Trạng thái (Chờ / Xác nhận / Hủy)
+
+**Khóa ngoại (FK):**
+- `customer_id` → `Customer(customer_id)`
+
+---
+
+### 🧾 2.5. Booking_Room (Chi tiết đặt phòng)
+Đây là **thực thể trung gian** giải quyết quan hệ **n–n** giữa `Booking` và `Room`.
+
+**Khóa chính (PK – kết hợp):**
+- `booking_id`  
+- `room_id`
+
+**Khóa ngoại (FK):**
+- `booking_id` → `Booking(booking_id)`  
+- `room_id` → `Room(room_id)`
+
+**Thuộc tính:**
+- `price_per_night` – Giá tại thời điểm đặt  
+
+---
+
+### 💳 2.6. Payment (Thanh toán)
+**Khóa chính (PK):**
+- `payment_id`
+
+**Thuộc tính:**
+- `payment_method` – Phương thức (Thẻ, Chuyển khoản, ...)  
+- `payment_date` – Ngày thanh toán  
+- `amount` – Số tiền  
+- `status` – Trạng thái thanh toán  
+
+**Khóa ngoại (FK):**
+- `booking_id` → `Booking(booking_id)`
+
+---
+
+### ⭐ 2.7. Review (Đánh giá)
+**Khóa chính (PK):**
+- `review_id`
+
+**Thuộc tính:**
+- `rating` – Điểm số  
+- `comment` – Bình luận  
+- `review_date` – Ngày đăng  
+
+**Khóa ngoại (FK):**
+- `customer_id` → `Customer(customer_id)`  
+- `hotel_id` → `Hotel(hotel_id)`
+
+---
+
+## 🔗 3. Các Mối Quan Hệ
+
+### 🏨 Hotel – Room
+- **Kiểu:** 1 – n  
+- Một khách sạn có **nhiều phòng**  
+- Một phòng thuộc về **một khách sạn**
+
+---
+
+### 👤 Customer – Booking
+- **Kiểu:** 1 – n  
+- Một khách hàng có thể tạo **nhiều booking**  
+- Một booking thuộc về **một khách hàng**
+
+---
+
+### 📅 Booking – Room
+- **Kiểu:** n – n  
+- **Giải pháp:** Thực thể trung gian `Booking_Room`  
+- Một booking có thể bao gồm **nhiều phòng**  
+- Một phòng có thể xuất hiện trong **nhiều booking** (khác thời gian)
+
+---
+
+### 📅 Booking – Payment
+- **Kiểu:** 1 – 1  
+- Một booking có **đúng một thanh toán** (nếu thành công)
+
+---
+
+### 👤 Customer – Review – Hotel
+- Một khách hàng có thể viết **nhiều đánh giá**  
+- Mỗi đánh giá gắn với **một khách sạn**  
+- Chỉ đánh giá khách sạn đã từng ở
+
+---
+
+## 🗺️ 4. Sơ đồ ERD
