@@ -1,10 +1,9 @@
 # 🎓 Hệ thống Quản lý Đăng ký Môn học Đại học
+## 📌 Mục Lục
+- [1. Các Thực Thể và Thuộc Tính](#-1-các-thực-thể-và-thuộc-tính)
+- [3. Sơ đồ ERD](#-3-sơ-đồ-erd)
+- [🛒 Hệ thống Quản lý Đơn hàng Thương mại Điện tử](#🛒-hệ-thống-quản-lý-đơn-hàng-thương-mai-điện-tử)
 
-## 📌 Giới thiệu
-Hệ thống Quản lý Đăng ký Môn học Đại học được thiết kế nhằm hỗ trợ việc quản lý sinh viên, môn học, giảng viên, lớp học phần và quá trình đăng ký môn học.  
-Hệ thống sử dụng mô hình **Entity–Relationship (ER)** để mô tả các thực thể và mối quan hệ giữa chúng.
-
----
 
 ## 🧩 1. Các Thực Thể và Thuộc Tính
 
